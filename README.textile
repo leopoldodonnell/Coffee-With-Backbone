@@ -1,0 +1,114 @@
+h1. Coffee With Backbone
+
+End-users are expecting more from their web applications and, fortunately, tools for making this
+happen without a Herculean effort are appearing on the scene and earning traction very quickly.
+
+This project incorporates several of these technologies:
+* "Backbone":http://documentcloud.github.com/backbone/: A javascript library that offers a model-view-controller approach to delivering greater client-side interactivity
+* "Underscore":http://documentcloud.github.com/underscore/: A templating and general purpose library for javascript
+* "CoffeeScript":http://jashkenas.github.com/coffee-script/: A language that compiles into javascript. It offers lint-like checking in the compile phase and encourages more elegant and easy to read code.
+* "HAML":http://haml-lang.com/: Haml takes your gross, ugly templates and replaces them with veritable Haiku.
+
+h2. SKILZ
+
+You'll need the following skills.
+* Basic 101-Level Grails: This shouldn't be your first Grails app, but we're not getting too crazy.
+* Intermediate Javascript: You should "get" javascript, but you don't have to be an expert.
+* Basic JQuery: You should "get" selectors.
+* Read up on CoffeeScript, Backbone, Underscore and HAML: shouldn't take more than an hour or two.
+* Some experience with JSON
+
+h2. The App
+
+This is no genius application. It's got one working domain class and one controller. The UI consists of
+one page that defers most of the work to a component that is built using CoffeeScript, Backbone and Underscore.
+
+Barista is the domain class that represents a fictional coffee shop's Baristas. Once you've built the App,
+select the BaristaController. The default will list the Baristas as a list with a text entry field below. You
+can add new Baristas by typing into this field and you can delete Baristas by selecting the delete button that
+appears dynamically beside each Barista as you mouse over the entries.
+
+*TODO:* Extend this application to show how to implement master-detail relationships and browser history.
+
+h2. Building the App
+
+Grab the app via Git:
+
+bc.. git pull git@github.com:leopoldodonnell/Coffee-With-Backbone.git
+
+p. Compile and run the app
+
+bc.. cd Coffee-With-Backbone
+grails compile
+grails run-app
+
+h2. Sources of Interest
+
+Start with the configuration. Here's where you need to make sure that the resource plugin will see your
+sources and load the javascript libraries you'll need.
+
+*Configuration*
+
+In grails-app/conf/Config.groovy...
+
+bc.. grails.resources.adhoc.patterns = ['/images/*', '/css/*', '/js/*', '/plugins/*', '/js/coffeescriptGenerated/*']
+
+p. In grails-app/conf/ApplicationResources.groovy you'll add the following module...
+
+bc.. backbone {
+	dependsOn 'jquery'
+
+	resource url:'/js/underscore.js', disposition:'head'
+	resource url:'/js/backbone.js', disposition:'head'
+}
+
+p. *HAML*
+
+Next checkout the HAML layout: grails-app/views/layouts/main.haml. Notice how much more readable it is now that all of HTML cruft has been eradicated (note to developers - watch your indentation, its important in HAML). We've added two modules, backbone and jquery-ui. The jquery-ui is used to illustrate how you might integrate it into
+your CoffeeScript-ized Backbone code.
+
+*GRAILS SOURCES*
+
+Take a quick look at the domain model: grails-app/domain/cwb/Barista.groovy. Nothing much there, but enough to
+illustrate our solution.
+
+The next item, grails-app/contollers/cwb/BaristaController.groovy, is more involved. This a RESTFULL controller
+that is setup to serve both HTML and JSON responses. Note the imports for the converters and the use of
+_withFormat_ for several of the actions. Sadly, _withFormat_ will not work for all of the _RESTFUL_
+actions.
+
+In the cases of _Save_, _Update_ and _Delete_, it is necessary to check the request format or the _accept_
+header element (in the case of Delete). Here's a snippet...
+
+bc.. def update() {
+	Barista barista = Barista.get(params.id)
+	
+	if (request.format == 'json') {
+...
+
+p. and
+
+bc.. def delete() {
+	Barista barista = Barista.get(params?.id)
+
+	// The only way, it seems, to know if the delete is an Ajax Delete
+	boolean isJson = request.getHeader('accept')  =~ /application\/json/
+	
+	if (isJson) {
+...
+
+p. *THE UI*
+
+Now take a quick look at the view for the default action, _list_: grails-app/views/barista/list.haml. Once
+again, note how clean it looks!
+
+In the header, we setup the JSON data to populate the Barista list and then later in the body, we load our
+Bacbone-ized component, src/coffee/coffee_with_backbone.coffee and our page specific CoffeeScript code
+src/coffee/barista.coffee.
+
+I hope these files help you on your way to adding these technologies to your own project and have you
+building faster and slicker client-side applications!
+
+Enjoy,
+   Leo O'Donnell
+
