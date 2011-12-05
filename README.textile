@@ -42,10 +42,32 @@ bc.. cd Coffee-With-Backbone
 grails compile
 grails run-app
 
+p. *Important CoffeeScript Note:*
+
+When you're working with CoffeeScript files, you must compile them, they are not auto-compiled while
+your application is running (maybe it will be fixed in a future version of the coffee-script plugin).
+Fortunately, the generated javascript will be picked up by your already running application, so you
+won't have to kill your app and restart with each script update.
+
+The compile is simple:
+
+bc.. grails compile
+
 h2. Sources of Interest
 
 Start with the configuration. Here's where you need to make sure that the resource plugin will see your
 sources and load the javascript libraries you'll need.
+
+*Plugins*
+
+Take a look in the application.properties file. The coffeescript plugin, us all you'll need in the future,
+but this app is also include jquery-ui. You may also want to consider using a few other plugins for your
+production-ready application.
+
+You may also consider:
+* *yui-minify-resources* - to minify your generated javascript in production
+* *zipped-resources* - to zip your generated javascript in production
+* *cache-headers* - improve client-side caching.
 
 *Configuration*
 
