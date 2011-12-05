@@ -1,0 +1,11 @@
+target/*
+*.class
+target-*/*
+stacktrace.log
+.DS_Store
+web-app/WEB-INF/*
+web-app/WEB-INF/*/*
+.idea
+*.iml
+*.sublime-*
+*.gsp

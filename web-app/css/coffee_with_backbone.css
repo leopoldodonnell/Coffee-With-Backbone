@@ -1,0 +1,30 @@
+.flash {
+    background: #ffe957;
+    border: 1px dotted black;
+    color: black;
+    padding: 1em;
+    margin: 1em;
+    font-weight: bold;
+    background-color: #ffe957;
+}
+
+.errors {
+    background: lightpink;
+    border: 1px dotted red;
+    color: black;
+    padding: 1em;
+    margin: 1em;
+    font-weight: bold;
+}
+
+#baristas {
+	margin-left: 2em;
+	width: 20em;
+}
+.cwbInput { width: 20em;}
+.hidden { display: none; }
+.cwbItemDestroy { float: right;}
+.cwbDisplay {display: block;}
+.cwbEditing .cwbDisplay,
+.cwbEdit { display: none;}
+.cwbEditing .cwbEdit { display: block;}

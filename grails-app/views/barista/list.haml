@@ -1,0 +1,17 @@
+<%! import grails.converters.JSON %>
+!!!
+%head
+	%title Baristas
+	%meta(name="layout" content="main")
+	
+	%script
+		baristaList = ${baristaInstanceList as JSON};
+		siteUrl = '/coffee-with-backbone'
+
+%body
+	%h1 Baristas
+	#baristas
+	
+	
+	%coffee:js(name="coffee_with_backbone")
+	%coffee:js(name="barista")/

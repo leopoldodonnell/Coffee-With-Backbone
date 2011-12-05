@@ -1,0 +1,96 @@
+%html
+  %head
+    %title Welcome to Grails
+    %meta(name="layout" content="main")
+    :css
+      #nav {
+        margin-top:20px;
+        margin-left:30px;
+        width:228px;
+        float:left;
+      }
+      .homePagePanel * {
+        margin:0px;
+      }
+      .homePagePanel .panelBody ul {
+        list-style-type:none;
+        margin-bottom:10px;
+      }
+      .homePagePanel .panelBody h1 {
+        text-transform:uppercase;
+        font-size:1.1em;
+        margin-bottom:10px;
+      }
+      .homePagePanel .panelBody {
+        background: url(images/leftnav_midstretch.png) repeat-y top;
+        margin:0px;
+        padding:15px;
+      }
+      .homePagePanel .panelBtm {
+        background: url(images/leftnav_btm.png) no-repeat top;
+        height:20px;
+        margin:0px;
+      }
+
+      .homePagePanel .panelTop {
+        background: url(images/leftnav_top.png) no-repeat top;
+        height:11px;
+        margin:0px;
+      }
+      h2 {
+        margin-top:15px;
+        margin-bottom:15px;
+        font-size:1.2em;
+      }
+      #pageBody {
+        margin-left:280px;
+        margin-right:20px;
+      }
+  %body
+    #nav
+      .homePagePanel
+        .panelTop
+        .panelBody
+          %h1 Application Status
+          %ul
+            %li
+              App version: 
+              %g:meta(name="app.version")
+            %li
+              Grails version: 
+              %g:meta(name="app.grails.version")
+            %li
+              JVM version:
+              ${System.getProperty('java.version')}
+            %li
+              Controllers:
+              ${grailsApplication.controllerClasses.size()}
+            %li
+              Domains:
+              ${grailsApplication.domainClasses.size()}
+            %li
+              Services:
+              ${grailsApplication.serviceClasses.size()}
+            %li
+              Tag Libraries:
+              ${grailsApplication.tagLibClasses.size()}
+          %h1 Installed Plugins
+          %ul
+            %g:set(var="pluginManager" value="${applicationContext.getBean('pluginManager')}")
+            %g:each(var="plugin" in="${pluginManager.allPlugins}")
+              %li ${plugin.name} - ${plugin.version}
+        .panelBtm
+    #pageBody
+      %h1 Welcome to Grails
+      %p
+        Congratulations, you have successfully started your first Grails application! At the moment
+        this is the default page, feel free to modify it to either redirect to a controller or display whatever
+        content you may choose. Below is a list of controllers that are currently deployed in this application,
+        click on each to execute its default action:
+
+      #controllerList.dialog
+        %h2 Available Controllers:
+        %ul
+          %g:each(var="c" in="${grailsApplication.controllerClasses}")
+            %li.controller
+              %g:link(controller="${c.logicalPropertyName}") ${c.fullName}
