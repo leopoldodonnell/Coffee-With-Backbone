@@ -34,7 +34,7 @@ h2. Building the App
 
 Grab the app via Git:
 
-bc.. git pull git@github.com:leopoldodonnell/Coffee-With-Backbone.git
+bc.. git clone git@github.com:leopoldodonnell/Coffee-With-Backbone.git
 
 p. Compile and run the app
 
